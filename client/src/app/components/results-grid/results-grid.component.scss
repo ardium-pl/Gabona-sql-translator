@@ -1,0 +1,10 @@
+::ng-deep {
+    ag-grid-angular {
+        height: 16rem;
+    }
+}
+
+.ag-theme-quartz,
+.ag-theme-quartz-dark {
+  --ag-background-color: var(--sys-surface-container-lowest);
+}
