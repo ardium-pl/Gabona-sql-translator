@@ -1,6 +1,6 @@
 # SQL Translator
 
-A web application for the management board of BUDMAT company that simplifies retrieval of key information from the internal database. The application provides a natural language interface for database queries, translating human language questions into SQL and presenting results in an easy-to-understand format.
+A web application for the management board of GABON company that simplifies retrieval of key information from the internal database. The application provides a natural language interface for database queries, translating human language questions into SQL and presenting results in an easy-to-understand format.
 
 ## 🌟 Features
 
