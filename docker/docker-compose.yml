@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: SA
+      MONGO_INITDB_ROOT_PASSWORD: Password123!
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app_network
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: gabona_sql
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=Password123!"
+      - "MSSQL_PID=Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
+      - mssql_backups:/var/opt/mssql/backup
+      - mssql_logs:/var/opt/mssql/log
+    networks:
+      - app_network
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
+  mssql_data:
+  mssql_backups:
+  mssql_logs:
+
+networks:
+  app_network:
+    driver: bridge

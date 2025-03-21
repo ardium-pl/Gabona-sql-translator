@@ -1,0 +1,73 @@
+<div
+  class="main-container"
+  [ngClass]="this.dataFetchingService.isFirstAppOpen() ? 'first-app-open' : ''"
+>
+  <div class="col col-left">
+    <!-- Zapytanie do bazy danych -->
+    <app-card
+      cardTitle="Zapytanie do bazy danych"
+    >
+      <form class="form" [formGroup]="zapytanieForm" (ngSubmit)="submitQuery()">
+        <textarea
+          type="text"
+          formControlName="query"
+          class="card-content zapytanie"
+          [ngClass]="{
+            error: this.messageService.errorMessage(),
+            'first-app-open': this.dataFetchingService.isFirstAppOpen()
+          }"
+        ></textarea>
+
+        <div class="bottom-row-container">
+          @if (this.messageService.errorMessage()) {
+          <div class="error-container">
+            <b>Błąd:</b> {{ this.messageService.errorMessage() }}
+          </div>
+          } @if (this.dataFetchingService.isLoading()) {
+          <app-spinner />
+          }
+
+          <div class="button-container">
+            <app-button
+              [disabled]="
+                this.dataFetchingService.isLoading()
+              "
+              type="submit"
+              >Zatwierdź</app-button
+            >
+          </div>
+        </div>
+      </form>
+    </app-card>
+
+    @if (!this.dataFetchingService.isFirstAppOpen()) {
+    <!-- Odpowiedź Asystenta -->
+    <app-card cardTitle="Odpowiedź Asystenta">
+      <div
+        class="card-content odpowiedz-asystenta"
+        [innerHTML]="this.dataFetchingService.formattedAnswer()"
+      ></div>
+    </app-card>
+    }
+  </div>
+
+  @if (!this.dataFetchingService.isFirstAppOpen()) {
+  <div class="col col-right">
+    <div class="col-right-centered-holder">
+      <!-- Tłumaczenie SQL -->
+      <app-card cardTitle="Tłumaczenie SQL" class="card-sql">
+        <div
+          class="card-content tlumaczenie-sql"
+          [innerHTML]="this.dataFetchingService.sqlStatement()"
+        ></div>
+      </app-card>
+
+      <!-- Dane z bazy -->
+      <app-card cardTitle="Dane z bazy" class="card-ag-grid">
+        <app-results-grid />
+      </app-card>
+    </div>
+  </div>
+  }
+
+</div>
